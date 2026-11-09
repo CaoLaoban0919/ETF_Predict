@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#182521">
+  <title>ETF 轮动监控台</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <div class="brand-mark" aria-hidden="true">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="brand-copy">
+        <h1>ETF 轮动监控台</h1>
+        <p id="periodLabel">等待回测数据</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <span id="environmentBadge" class="status-badge">加载中</span>
+      <div class="updated-block">
+        <span>数据更新</span>
+        <strong id="updatedAt">--</strong>
+      </div>
+      <button id="refreshButton" class="refresh-button" type="button">刷新数据</button>
+    </div>
+  </header>
+
+  <section id="loadingState" class="state-panel" aria-live="polite">
+    <div class="spinner" aria-hidden="true"></div>
+    <p>正在载入回测结果</p>
+  </section>
+
+  <section id="errorState" class="state-panel error-state" hidden aria-live="assertive">
+    <strong>数据加载失败</strong>
+    <p id="errorMessage">无法读取回测数据。</p>
+    <button id="retryButton" type="button">重试</button>
+  </section>
+
+  <main id="dashboard" class="dashboard" hidden>
+    <section class="panel market-panel" aria-labelledby="marketTitle">
+      <header class="panel-header">
+        <div>
+          <span class="section-kicker">MARKET DATA</span>
+          <h2 id="marketTitle">ETF 真实行情</h2>
+        </div>
+        <div class="market-actions">
+          <label class="symbol-input">
+            <span>股票代码</span>
+            <input id="symbolInput" type="text" value="510500" maxlength="16" inputmode="latin" autocomplete="off">
+          </label>
+          <button id="loadSymbolButton" type="button">查看行情</button>
+          <button id="saveRecordButton" type="button">记录当前数据</button>
+        </div>
+      </header>
+      <div class="market-summary">
+        <div><span>来源</span><strong id="marketSource">--</strong></div>
+        <div><span>周期</span><strong id="marketPeriod">--</strong></div>
+        <div><span>复权</span><strong id="marketAdjust">--</strong></div>
+        <div><span>条数</span><strong id="marketCount">--</strong></div>
+        <div><span>区间</span><strong id="marketRange">--</strong></div>
+        <div><span>抓取时间</span><strong id="marketFetchedAt">--</strong></div>
+      </div>
+      <div class="market-table-wrap">
+        <table class="market-table">
+          <thead>
+            <tr>
+              <th>日期</th>
+              <th>开盘</th>
+              <th>收盘</th>
+              <th>最高</th>
+              <th>最低</th>
+              <th>成交量</th>
+              <th>成交额</th>
+              <th>振幅</th>
+              <th>涨跌幅</th>
+              <th>涨跌额</th>
+              <th>换手率</th>
+            </tr>
+          </thead>
+          <tbody id="marketTable"></tbody>
+        </table>
+      </div>
+      <div class="market-json">
+        <div class="panel-mini-title">完整响应</div>
+        <pre id="marketRawJson">{}</pre>
+      </div>
+      <div class="market-history">
+        <div class="panel-mini-title">已记录数据</div>
+        <div id="marketHistoryList" class="market-history-list"></div>
+      </div>
+      <div class="market-compare">
+        <div class="panel-mini-title">记录对比</div>
+        <div class="market-compare-controls">
+          <input id="compareSymbolInput" type="text" value="" maxlength="16" autocomplete="off" placeholder="输入另一个代码">
+          <button id="compareButton" type="button">对比当前代码</button>
+        </div>
+        <div id="marketCompareResult" class="market-compare-result"></div>
+      </div>
+    </section>
+
+    <section class="context-band" aria-label="回测上下文">
+      <div>
+        <span class="context-label">数据源</span>
+        <strong id="dataSource" title="--">--</strong>
+      </div>
+      <div>
+        <span class="context-label">资产池</span>
+        <strong id="symbolUniverse">--</strong>
+      </div>
+      <div>
+        <span class="context-label">执行规则</span>
+        <strong id="executionRule">--</strong>
+      </div>
+    </section>
+
+    <section class="kpi-grid" aria-label="核心回测指标">
+      <article class="kpi-card">
+        <span class="kpi-label">累计收益</span>
+        <strong id="totalReturn" class="kpi-value">--</strong>
+        <span id="totalReturnMeta" class="kpi-meta">--</span>
+      </article>
+      <article class="kpi-card">
+        <span class="kpi-label">年化收益</span>
+        <strong id="cagr" class="kpi-value">--</strong>
+        <span id="cagrMeta" class="kpi-meta">--</span>
+      </article>
+      <article class="kpi-card">
+        <span class="kpi-label">夏普比率</span>
+        <strong id="sharpe" class="kpi-value">--</strong>
+        <span id="sharpeMeta" class="kpi-meta">--</span>
+      </article>
+      <article class="kpi-card">
+        <span class="kpi-label">最大回撤</span>
+        <strong id="maxDrawdown" class="kpi-value">--</strong>
+        <span id="maxDrawdownMeta" class="kpi-meta">--</span>
+      </article>
+      <article class="kpi-card">
+        <span class="kpi-label">累计交易成本</span>
+        <strong id="transactionCost" class="kpi-value">--</strong>
+        <span id="transactionCostMeta" class="kpi-meta">--</span>
+      </article>
+      <article class="kpi-card">
+        <span class="kpi-label">在场时间</span>
+        <strong id="investedRatio" class="kpi-value">--</strong>
+        <span id="investedRatioMeta" class="kpi-meta">--</span>
+      </article>
+    </section>
+
+    <section class="analysis-grid">
+      <article class="panel chart-panel">
+        <header class="panel-header">
+          <div>
+            <span class="section-kicker">PERFORMANCE</span>
+            <h2>策略表现</h2>
+          </div>
+          <div class="segmented-control" role="tablist" aria-label="图表模式">
+            <button type="button" role="tab" data-chart-mode="equity" aria-selected="true">净值</button>
+            <button type="button" role="tab" data-chart-mode="drawdown" aria-selected="false">回撤</button>
+          </div>
+        </header>
+        <figure class="chart-figure">
+          <div id="chartFrame" class="chart-frame">
+            <svg id="performanceChart" viewBox="0 0 960 360" role="img" aria-label="策略净值与基准净值走势"></svg>
+            <div id="chartTooltip" class="chart-tooltip" hidden></div>
+          </div>
+          <figcaption id="chartLegend" class="chart-legend"></figcaption>
+        </figure>
+      </article>
+
+      <aside class="panel allocation-panel">
+        <header class="panel-header">
+          <div>
+            <span class="section-kicker">POSITION</span>
+            <h2>当前仓位</h2>
+          </div>
+          <span id="allocationDate" class="panel-date">--</span>
+        </header>
+        <div class="allocation-visual">
+          <div id="allocationDonut" class="allocation-donut" role="img" aria-label="当前资产配置">
+            <div class="donut-center">
+              <strong id="exposureValue">--</strong>
+              <span>风险资产</span>
+            </div>
+          </div>
+        </div>
+        <div id="allocationList" class="allocation-list"></div>
+      </aside>
+    </section>
+
+    <section class="detail-grid">
+      <article class="panel rebalance-panel">
+        <header class="panel-header">
+          <div>
+            <span class="section-kicker">DECISIONS</span>
+            <h2>最近调仓</h2>
+          </div>
+          <span id="rebalanceCount" class="panel-date">--</span>
+        </header>
+        <div class="table-scroll">
+          <table>
+            <thead>
+              <tr>
+                <th scope="col">信号日</th>
+                <th scope="col">目标资产</th>
+                <th scope="col">综合分</th>
+                <th scope="col">动量</th>
+                <th scope="col">趋势</th>
+                <th scope="col">状态</th>
+              </tr>
+            </thead>
+            <tbody id="rebalanceTable"></tbody>
+          </table>
+        </div>
+      </article>
+
+      <aside class="panel profile-panel">
+        <header class="panel-header">
+          <div>
+            <span class="section-kicker">MODEL</span>
+            <h2>策略配置</h2>
+          </div>
+        </header>
+        <div id="factorMix" class="factor-mix"></div>
+        <dl class="config-list">
+          <div><dt>调仓间隔</dt><dd id="rebalanceFrequency">--</dd></div>
+          <div><dt>持仓数量</dt><dd id="topK">--</dd></div>
+          <div><dt>交易费率</dt><dd id="commissionBps">--</dd></div>
+          <div><dt>执行延迟</dt><dd>T+1</dd></div>
+          <div><dt>趋势过滤</dt><dd id="trendFilter">--</dd></div>
+          <div><dt>成交次数</dt><dd id="executionCount">--</dd></div>
+        </dl>
+      </aside>
+    </section>
+
+    <section class="panel agent-panel" aria-labelledby="agentTitle">
+      <header class="panel-header">
+        <div>
+          <span class="section-kicker">AGENT REVIEW</span>
+          <h2 id="agentTitle">AI 策略复核</h2>
+        </div>
+        <span id="agentStatus" class="agent-status" aria-live="polite">检查中</span>
+      </header>
+      <div class="agent-body">
+        <form id="agentForm" class="agent-form">
+          <label for="agentQuestion">分析问题</label>
+          <label for="agentCompareSymbol">对比代码</label>
+          <input id="agentCompareSymbol" type="text" value="" maxlength="16" autocomplete="off" placeholder="可选：输入对比代码">
+          <textarea
+            id="agentQuestion"
+            name="question"
+            rows="4"
+            minlength="2"
+            maxlength="1000"
+            placeholder="分析当前策略表现、仓位与主要风险"
+            required
+          ></textarea>
+          <button id="agentSubmit" type="submit" disabled>开始分析</button>
+        </form>
+        <div id="agentResult" class="agent-result" aria-live="polite">
+          <p id="agentEmpty" class="agent-empty">等待分析请求</p>
+          <div id="agentResponse" hidden>
+            <div id="agentResponseMeta" class="agent-response-meta"></div>
+            <div id="agentAnswer" class="agent-answer"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="app-footer">
+    <span>ETF Rotation MVP</span>
+    <span id="footerNotice">回测结果不构成投资建议</span>
+  </footer>
+
+  <!-- 图表渲染：库文件随 Dashboard 镜像发布，避免浏览器运行时访问外部 CDN。 -->
+  <script src="./vendor/marked.min.js" defer></script>
+  <script src="./vendor/purify.min.js" defer></script>
+  <script src="./vendor/mermaid.min.js" defer></script>
+  <script src="./app.js" defer></script>
+  <script src="./agent.js" defer></script>
+</body>
+</html>

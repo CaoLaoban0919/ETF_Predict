@@ -1,0 +1,10 @@
+# macOS 移植：固定 Python 3.12，与 Agent 容器版本保持一致，避开系统 Python 3.14 的依赖兼容风险。
+name: etf-predict-mvp
+channels:
+  - conda-forge
+  - nodefaults  # macOS 移植：只使用 conda-forge，避免未接受条款的 Anaconda 默认频道。
+dependencies:
+  - python=3.12
+  - numpy>=2.0,<3
+  - pandas>=2.2,<3
+  - pyarrow>=17,<24

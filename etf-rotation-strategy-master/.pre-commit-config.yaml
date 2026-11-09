@@ -1,0 +1,17 @@
+# Pre-commit配置 - 实用主义优先
+# 核心理念：简单、实用、高效，专注于真正重要的问题
+
+repos:
+  # 自动代码格式化 - 消除风格争论，统一标准
+  - repo: https://github.com/psf/black
+    rev: 24.10.0
+    hooks:
+      - id: black
+        args: [--line-length=88]
+
+  # 自动导入排序 - 减少merge冲突，提高可读性
+  - repo: https://github.com/pycqa/isort
+    rev: 6.0.1
+    hooks:
+      - id: isort
+        args: [--profile, black]

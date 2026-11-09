@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Past runs | Brian Beals</title>
+  <meta name="description" content="Date-stamped archive of every weekly sector rotation screen run, with dashboards and AI commentary.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231E3A5F'/%3E%3Ctext x='16' y='15' text-anchor='middle' dominant-baseline='central' fill='white' font-family='system-ui' font-size='16' font-weight='800'%3EBB%3C/text%3E%3C/svg%3E">
+  <!-- Social card. This shell renders index.html, which IS sector.brianbeals.com,
+       so the og: tags have to live here. report.py has its own near-identical head
+       for the dated pages under weekly/; changing one does not change the other,
+       which is the trap that cost a wasted workflow run. -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Past runs">
+  <meta property="og:description" content="Date-stamped archive of every weekly sector rotation screen run, with dashboards and AI commentary.">
+  <meta property="og:url" content="https://sector.brianbeals.com/weekly/history/">
+  <meta property="og:image" content="https://sector.brianbeals.com/og-card.png">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <link rel="canonical" href="https://sector.brianbeals.com/weekly/history/">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#1E3A5F" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0F1822" media="(prefers-color-scheme: dark)">
+  <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "8b547f8c06884898a5b99f89681a355e"}'></script>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --navy: #1E3A5F;
+      --blue: #2E86C1;
+      --bg: #F4F6F9;
+      --text: #1A1A2A;
+      --muted: #6B7280;
+      --card: #FFFFFF;
+      --warn-bg: #FEF3F2;
+      --warn-border: #C0392B;
+      --warn-ink: #C0392B;
+      --head: #1E3A5F;
+      --code-bg: rgba(30,58,95,0.06);
+      --hairline: rgba(30,58,95,0.12);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(at 25% 20%, rgba(46,134,193,0.12) 0, transparent 50%),
+        radial-gradient(at 75% 80%, rgba(30,58,95,0.10) 0, transparent 50%),
+        var(--bg);
+      line-height: 1.6;
+    }
+    h1, h2, h3 {
+      font-family: "Source Serif 4", Georgia, serif;
+      color: var(--head);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    h1 { font-size: 2.5rem; margin: 0 0 1rem; }
+    h2 { font-size: 1.6rem; margin: 2.5rem 0 1rem; }
+    h3 { font-size: 1.15rem; margin: 1.5rem 0 0.5rem; }
+    p { margin: 0 0 1rem; }
+    a { color: var(--blue); text-underline-offset: 4px; }
+    a:hover { text-decoration: none; }
+    header.site { padding: 2rem 1.5rem 0.5rem; }
+    header.site nav {
+      max-width: 42rem;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.95rem;
+    }
+    header.site nav .brand {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    header.site nav .links { display: flex; gap: 1.5rem; }
+    header.site nav .links a { color: var(--text); text-decoration: none; }
+    header.site nav .links a:hover { text-decoration: underline; }
+    main { max-width: 42rem; margin: 0 auto; padding: 3rem 1.5rem 2rem; }
+    .subtitle { font-size: 1.2rem; color: var(--muted); margin-bottom: 2rem; }
+    .disclaimer {
+      background: var(--warn-bg);
+      border-left: 4px solid var(--warn-border);
+      padding: 1rem 1.25rem;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      margin: 2rem 0;
+      color: var(--text);
+    }
+    .disclaimer strong { color: var(--warn-ink); }
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    @media (max-width: 600px) { .cards { grid-template-columns: 1fr; } }
+    .card {
+      background: var(--card);
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      text-decoration: none;
+      color: var(--text);
+      display: block;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      text-decoration: none;
+    }
+    .card h3 { color: var(--head); margin-top: 0; }
+    .card p { color: var(--muted); margin-bottom: 0; font-size: 0.95rem; }
+    .back {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      color: var(--blue);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .back:hover { text-decoration: underline; }
+    .commentary { font-size: 1.02rem; }
+    .commentary p { margin: 0 0 1rem; }
+    .commentary h2 { font-size: 1.4rem; margin: 2rem 0 0.75rem; }
+    .commentary strong { color: var(--head); }
+    .attribution {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: 2rem;
+    }
+    .attribution a { color: var(--muted); }
+    footer.site {
+      max-width: 42rem;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-align: center;
+    }
+    footer.site a { color: inherit; text-underline-offset: 3px; }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      background: var(--code-bg);
+      padding: 0.1em 0.4em;
+      border-radius: 3px;
+      font-size: 0.92em;
+    }
+    hr { border: none; border-top: 1px solid var(--hairline); margin: 2rem 0; }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0F1822;
+        --text: #E6EDF3;
+        --muted: #93A6B8;
+        --card: #16202B;
+        --head: #A9C9E8;
+        --warn-bg: #33150F;
+        --warn-ink: #F1948A;
+        --code-bg: rgba(169,201,232,0.12);
+        --hairline: #2A3B4D;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site">
+    <nav>
+      <a href="https://brianbeals.com/" class="brand">Brian Beals</a>
+      <div class="links">
+        <a href="https://brianbeals.com/about">About</a>
+        <a href="https://brianbeals.com/contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <a href="../../" class="back">← Sector Rotation Screen home</a>
+
+    <h1>Past runs</h1>
+    <p class="subtitle">Every weekly run, date-stamped. The latest is also mirrored at <a href="../latest/dashboard.html">weekly/latest/</a>.</p>
+
+    <div class="cards" style="grid-template-columns: 1fr;">
+      <div class="card">
+        <h3>August 02, 2026</h3>
+        <p>Dashboard, commentary, and disclaimer for the August 02, 2026 run.</p>
+        <p style="margin-top:0.75rem; font-size:0.9rem;"><a href="2026-08-02/dashboard.html" style="color:var(--blue); text-decoration:none;">View dashboard ↗</a> &nbsp;·&nbsp; <a href="2026-08-02/summary.html" style="color:var(--blue); text-decoration:none;">View commentary ↗</a></p>
+      </div>
+      <div class="card">
+        <h3>July 26, 2026</h3>
+        <p>Dashboard, commentary, and disclaimer for the July 26, 2026 run.</p>
+        <p style="margin-top:0.75rem; font-size:0.9rem;"><a href="2026-07-26/dashboard.html" style="color:var(--blue); text-decoration:none;">View dashboard ↗</a> &nbsp;·&nbsp; <a href="2026-07-26/summary.html" style="color:var(--blue); text-decoration:none;">View commentary ↗</a></p>
+      </div>
+      <div class="card">
+        <h3>July 19, 2026</h3>
+        <p>Dashboard, commentary, and disclaimer for the July 19, 2026 run.</p>
+        <p style="margin-top:0.75rem; font-size:0.9rem;"><a href="2026-07-19/dashboard.html" style="color:var(--blue); text-decoration:none;">View dashboard ↗</a> &nbsp;·&nbsp; <a href="2026-07-19/summary.html" style="color:var(--blue); text-decoration:none;">View commentary ↗</a></p>
+      </div>
+      <div class="card">
+        <h3>July 12, 2026</h3>
+        <p>Dashboard, commentary, and disclaimer for the July 12, 2026 run.</p>
+        <p style="margin-top:0.75rem; font-size:0.9rem;"><a href="2026-07-12/dashboard.html" style="color:var(--blue); text-decoration:none;">View dashboard ↗</a> &nbsp;·&nbsp; <a href="2026-07-12/summary.html" style="color:var(--blue); text-decoration:none;">View commentary ↗</a></p>
+      </div>
+      <div class="card">
+        <h3>July 11, 2026</h3>
+        <p>Dashboard, commentary, and disclaimer for the July 11, 2026 run.</p>
+        <p style="margin-top:0.75rem; font-size:0.9rem;"><a href="2026-07-11/dashboard.html" style="color:var(--blue); text-decoration:none;">View dashboard ↗</a> &nbsp;·&nbsp; <a href="2026-07-11/summary.html" style="color:var(--blue); text-decoration:none;">View commentary ↗</a></p>
+      </div>
+      <div class="card">
+        <h3>July 07, 2026</h3>
+        <p>Dashboard, commentary, and disclaimer for the July 07, 2026 run.</p>
+        <p style="margin-top:0.75rem; font-size:0.9rem;"><a href="2026-07-07/dashboard.html" style="color:var(--blue); text-decoration:none;">View dashboard ↗</a> &nbsp;·&nbsp; <a href="2026-07-07/summary.html" style="color:var(--blue); text-decoration:none;">View commentary ↗</a></p>
+      </div>
+      <div class="card">
+        <h3>July 05, 2026</h3>
+        <p>Dashboard, commentary, and disclaimer for the July 05, 2026 run.</p>
+        <p style="margin-top:0.75rem; font-size:0.9rem;"><a href="2026-07-05/dashboard.html" style="color:var(--blue); text-decoration:none;">View dashboard ↗</a> &nbsp;·&nbsp; <a href="2026-07-05/summary.html" style="color:var(--blue); text-decoration:none;">View commentary ↗</a></p>
+      </div>
+      <div class="card">
+        <h3>July 03, 2026</h3>
+        <p>Dashboard, commentary, and disclaimer for the July 03, 2026 run.</p>
+        <p style="margin-top:0.75rem; font-size:0.9rem;"><a href="2026-07-03/dashboard.html" style="color:var(--blue); text-decoration:none;">View dashboard ↗</a> &nbsp;·&nbsp; <a href="2026-07-03/summary.html" style="color:var(--blue); text-decoration:none;">View commentary ↗</a></p>
+      </div>
+      <div class="card">
+        <h3>June 28, 2026</h3>
+        <p>Dashboard, commentary, and disclaimer for the June 28, 2026 run.</p>
+        <p style="margin-top:0.75rem; font-size:0.9rem;"><a href="2026-06-28/dashboard.html" style="color:var(--blue); text-decoration:none;">View dashboard ↗</a> &nbsp;·&nbsp; <a href="2026-06-28/summary.html" style="color:var(--blue); text-decoration:none;">View commentary ↗</a></p>
+      </div>
+      <div class="card">
+        <h3>June 21, 2026</h3>
+        <p>Dashboard, commentary, and disclaimer for the June 21, 2026 run.</p>
+        <p style="margin-top:0.75rem; font-size:0.9rem;"><a href="2026-06-21/dashboard.html" style="color:var(--blue); text-decoration:none;">View dashboard ↗</a> &nbsp;·&nbsp; <a href="2026-06-21/summary.html" style="color:var(--blue); text-decoration:none;">View commentary ↗</a></p>
+      </div>
+      <div class="card">
+        <h3>June 14, 2026</h3>
+        <p>Dashboard, commentary, and disclaimer for the June 14, 2026 run.</p>
+        <p style="margin-top:0.75rem; font-size:0.9rem;"><a href="2026-06-14/dashboard.html" style="color:var(--blue); text-decoration:none;">View dashboard ↗</a> &nbsp;·&nbsp; <a href="2026-06-14/summary.html" style="color:var(--blue); text-decoration:none;">View commentary ↗</a></p>
+      </div>
+      <div class="card">
+        <h3>June 07, 2026</h3>
+        <p>Dashboard, commentary, and disclaimer for the June 07, 2026 run.</p>
+        <p style="margin-top:0.75rem; font-size:0.9rem;"><a href="2026-06-07/dashboard.html" style="color:var(--blue); text-decoration:none;">View dashboard ↗</a> &nbsp;·&nbsp; <a href="2026-06-07/summary.html" style="color:var(--blue); text-decoration:none;">View commentary ↗</a></p>
+      </div>
+      <div class="card">
+        <h3>May 31, 2026</h3>
+        <p>Dashboard, commentary, and disclaimer for the May 31, 2026 run.</p>
+        <p style="margin-top:0.75rem; font-size:0.9rem;"><a href="2026-05-31/dashboard.html" style="color:var(--blue); text-decoration:none;">View dashboard ↗</a> &nbsp;·&nbsp; <a href="2026-05-31/summary.html" style="color:var(--blue); text-decoration:none;">View commentary ↗</a></p>
+      </div>
+      <div class="card">
+        <h3>May 24, 2026</h3>
+        <p>Dashboard, commentary, and disclaimer for the May 24, 2026 run.</p>
+        <p style="margin-top:0.75rem; font-size:0.9rem;"><a href="2026-05-24/dashboard.html" style="color:var(--blue); text-decoration:none;">View dashboard ↗</a> &nbsp;·&nbsp; <a href="2026-05-24/summary.html" style="color:var(--blue); text-decoration:none;">View commentary ↗</a></p>
+      </div>
+      <div class="card">
+        <h3>May 17, 2026</h3>
+        <p>Dashboard, commentary, and disclaimer for the May 17, 2026 run.</p>
+        <p style="margin-top:0.75rem; font-size:0.9rem;"><a href="2026-05-17/dashboard.html" style="color:var(--blue); text-decoration:none;">View dashboard ↗</a> &nbsp;·&nbsp; <a href="2026-05-17/summary.html" style="color:var(--blue); text-decoration:none;">View commentary ↗</a></p>
+      </div>
+      <div class="card">
+        <h3>May 13, 2026</h3>
+        <p>Dashboard, commentary, and disclaimer for the May 13, 2026 run.</p>
+        <p style="margin-top:0.75rem; font-size:0.9rem;"><a href="2026-05-13/dashboard.html" style="color:var(--blue); text-decoration:none;">View dashboard ↗</a> &nbsp;·&nbsp; <a href="2026-05-13/summary.html" style="color:var(--blue); text-decoration:none;">View commentary ↗</a></p>
+      </div>
+      <div class="card">
+        <h3>May 10, 2026</h3>
+        <p>Dashboard, commentary, and disclaimer for the May 10, 2026 run.</p>
+        <p style="margin-top:0.75rem; font-size:0.9rem;"><a href="2026-05-10/dashboard.html" style="color:var(--blue); text-decoration:none;">View dashboard ↗</a> &nbsp;·&nbsp; <a href="2026-05-10/summary.html" style="color:var(--blue); text-decoration:none;">View commentary ↗</a></p>
+      </div>
+    </div>
+
+  </main>
+  <footer class="site">
+    <svg viewBox="0 0 32 32" width="16" height="16" style="vertical-align:middle;margin-right:6px" aria-label="Brian Beals"><rect width="32" height="32" rx="6" fill="#1E3A5F"/><text x="16" y="15" text-anchor="middle" dominant-baseline="central" fill="#fff" font-family="-apple-system,system-ui,sans-serif" font-size="16" font-weight="800" letter-spacing="-0.04em">BB</text></svg>© 2026 Brian Beals · <a href="https://brianbeals.com">brianbeals.com</a> · <a href="https://github.com/brianbeals/sector-rotation-screener">github</a>
+  </footer>
+</body>
+</html>

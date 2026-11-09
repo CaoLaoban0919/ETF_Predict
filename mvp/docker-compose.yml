@@ -1,0 +1,37 @@
+name: etf-rotation-mvp
+
+services:
+  agent-api:
+    build:
+      context: .
+      dockerfile: agent/Dockerfile
+    container_name: etf-rotation-agent
+    environment:
+      AGNO_TELEMETRY: "false"
+      ETF_DASHBOARD_DATA: /data/dashboard_data.json
+      ETF_MARKET_HISTORY: /data/market_history.json
+      ETF_MARKET_API_BASE: "${ETF_MARKET_API_BASE:-http://182.149.175.233:8000/api/v1/core/fund/etf/hist}"
+      # 数据刷新：可选真实行情目录与代码列表；为空时重新生成演示数据。
+      ETF_MARKET_DATA: "${ETF_MARKET_DATA:-}"
+      ETF_SYMBOLS: "${ETF_SYMBOLS:-}"
+      LLM_API_KEY: "${LLM_API_KEY:-}"
+      LLM_BASE_URL: "${LLM_BASE_URL:-https://api.deepseek.com}"
+      LLM_MODEL: "${LLM_MODEL:-deepseek-chat}"
+    volumes:
+      # 数据刷新：Agent 原子更新 output，Dashboard 继续只读挂载同一目录。
+      - ./output:/data
+    restart: unless-stopped
+
+  dashboard:
+    build:
+      context: .
+      dockerfile: dashboard/Dockerfile
+    container_name: etf-rotation-dashboard
+    depends_on:
+      agent-api:
+        condition: service_healthy
+    ports:
+      - "${DASHBOARD_PORT:-8080}:80"
+    volumes:
+      - ./output:/usr/share/nginx/html/data:ro
+    restart: unless-stopped

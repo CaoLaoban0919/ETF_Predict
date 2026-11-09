@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Weekly Commentary: July 26, 2026 | Brian Beals</title>
+  <meta name="description" content="Anthropic's Claude commentary on the July 26, 2026 sector rotation screen output. Not financial advice.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%231E3A5F'/%3E%3Ctext x='16' y='15' text-anchor='middle' dominant-baseline='central' fill='white' font-family='system-ui' font-size='16' font-weight='800'%3EBB%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600&display=swap" rel="stylesheet">
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#1E3A5F" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0F1822" media="(prefers-color-scheme: dark)">
+  <style>
+    :root {
+      color-scheme: light dark;
+      --navy: #1E3A5F;
+      --blue: #2E86C1;
+      --bg: #F4F6F9;
+      --text: #1A1A2A;
+      --muted: #6B7280;
+      --card: #FFFFFF;
+      --warn-bg: #FEF3F2;
+      --warn-border: #C0392B;
+      --warn-ink: #C0392B;
+      --head: #1E3A5F;
+      --code-bg: rgba(30,58,95,0.06);
+      --hairline: rgba(30,58,95,0.12);
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(at 25% 20%, rgba(46,134,193,0.12) 0, transparent 50%),
+        radial-gradient(at 75% 80%, rgba(30,58,95,0.10) 0, transparent 50%),
+        var(--bg);
+      line-height: 1.6;
+    }
+    h1, h2, h3 {
+      font-family: "Source Serif 4", Georgia, serif;
+      color: var(--head);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    h1 { font-size: 2.5rem; margin: 0 0 1rem; }
+    h2 { font-size: 1.6rem; margin: 2.5rem 0 1rem; }
+    h3 { font-size: 1.15rem; margin: 1.5rem 0 0.5rem; }
+    p { margin: 0 0 1rem; }
+    a { color: var(--blue); text-underline-offset: 4px; }
+    a:hover { text-decoration: none; }
+    header.site { padding: 2rem 1.5rem 0.5rem; }
+    header.site nav {
+      max-width: 42rem;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.95rem;
+    }
+    header.site nav .brand {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+    }
+    header.site nav .links { display: flex; gap: 1.5rem; }
+    header.site nav .links a { color: var(--text); text-decoration: none; }
+    header.site nav .links a:hover { text-decoration: underline; }
+    main { max-width: 42rem; margin: 0 auto; padding: 3rem 1.5rem 2rem; }
+    .subtitle { font-size: 1.2rem; color: var(--muted); margin-bottom: 2rem; }
+    .disclaimer {
+      background: var(--warn-bg);
+      border-left: 4px solid var(--warn-border);
+      padding: 1rem 1.25rem;
+      border-radius: 4px;
+      font-size: 0.95rem;
+      margin: 2rem 0;
+      color: var(--text);
+    }
+    .disclaimer strong { color: var(--warn-ink); }
+    .cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+      margin: 1.5rem 0;
+    }
+    @media (max-width: 600px) { .cards { grid-template-columns: 1fr; } }
+    .card {
+      background: var(--card);
+      border-radius: 8px;
+      padding: 1.5rem;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+      text-decoration: none;
+      color: var(--text);
+      display: block;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+    }
+    .card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      text-decoration: none;
+    }
+    .card h3 { color: var(--head); margin-top: 0; }
+    .card p { color: var(--muted); margin-bottom: 0; font-size: 0.95rem; }
+    .back {
+      display: inline-block;
+      margin-bottom: 1.5rem;
+      color: var(--blue);
+      text-decoration: none;
+      font-size: 0.95rem;
+    }
+    .back:hover { text-decoration: underline; }
+    .commentary { font-size: 1.02rem; }
+    .commentary p { margin: 0 0 1rem; }
+    .commentary h2 { font-size: 1.4rem; margin: 2rem 0 0.75rem; }
+    .commentary strong { color: var(--head); }
+    .attribution {
+      font-size: 0.85rem;
+      color: var(--muted);
+      font-style: italic;
+      margin-top: 2rem;
+    }
+    .attribution a { color: var(--muted); }
+    footer.site {
+      max-width: 42rem;
+      margin: 2rem auto;
+      padding: 1.5rem;
+      font-size: 0.85rem;
+      color: var(--muted);
+      text-align: center;
+    }
+    footer.site a { color: inherit; text-underline-offset: 3px; }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      background: var(--code-bg);
+      padding: 0.1em 0.4em;
+      border-radius: 3px;
+      font-size: 0.92em;
+    }
+    hr { border: none; border-top: 1px solid var(--hairline); margin: 2rem 0; }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0F1822;
+        --text: #E6EDF3;
+        --muted: #93A6B8;
+        --card: #16202B;
+        --head: #A9C9E8;
+        --warn-bg: #33150F;
+        --warn-ink: #F1948A;
+        --code-bg: rgba(169,201,232,0.12);
+        --hairline: #2A3B4D;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="site">
+    <nav>
+      <a href="https://brianbeals.com/" class="brand">Brian Beals</a>
+      <div class="links">
+        <a href="https://brianbeals.com/about">About</a>
+        <a href="https://brianbeals.com/contact">Contact</a>
+      </div>
+    </nav>
+  </header>
+  <main>
+    <a href="../../" class="back">← Sector Rotation Screen home</a>
+
+    <h1>Weekly Commentary: July 26, 2026</h1>
+
+    <div class="disclaimer"><strong>⚠️ Not financial advice.</strong> This is auto-generated each week by Anthropic's Claude (an AI model). Brian Beals is not a registered investment advisor, and Anthropic's Claude is not licensed to provide personalized financial advice. The screener is a research and methodology demo, not a recommendation system. Past performance does not predict future results. Do your own research before making any investment decisions.</div>
+
+    <p><a href="dashboard.html">View this week's dashboard ↗</a></p>
+
+    <hr>
+
+    <div class="commentary">
+<h2>What the screen said this week</h2>
+<p>The screen classified the current environment as mid-cycle, driven by industrial production (INDPRO) running at +1.1% year over year, which sits inside the 0.0% to 4.0% band the rule set treats as steady expansion. The yield curve reading of +0.34 (a positive spread between longer and shorter maturities) reinforced that label. In short, the macro inputs pointed to ongoing, unremarkable expansion rather than an overheating or contracting economy.</p>
+<p>Technology (XLK) topped the composite at 77.3, carried mainly by a maximum cycle-fit score of 100.0 and strong seasonality (84.7), even though its relative strength (RS), a measure of recent price performance versus peers, was middling at 46.0. Energy (XLE) took the second Buy slot at 66.8, but for a different reason: its RS was the highest in the group at 86.5, offsetting a weaker cycle fit of 50.0. So the two Buy signals reflect almost opposite ingredients, one cycle-and-season led, one price-momentum led.</p>
+<p>Communications (XLC) drew the lone Watch flag: its cycle fit is maxed at 100.0, but RS of 44.4 sits just below the confirmation threshold, and its 3-month RS is deeply negative at -13.78%. No sector fell to an Avoid this week; the lowest composites (XLY at 45.1, XLP at 44.4) stayed above the 40 cutoff.</p>
+<h2>Things worth noticing</h2>
+<p>A recurring pattern this week is the gap between cycle favor and price action. XLC and XLK both score a perfect cycle fit, yet both carry sub-46 RS. XLC in particular pairs a top cycle score with the worst 3-month RS on the board, exactly the divergence the Watch label is designed to surface.</p>
+<p>The Communications seasonality figure is tagged "thin sample," meaning fewer historical observations feed that number, so it deserves more skepticism than the others. Worth keeping in mind before reading much into its 74.3.</p>
+<p>Also notable: signal quality is thin. Across 1145 Buy calls, forward returns beat SPY by only +0.05% on average and outpaced SPY just 51% of the time. The edge in this rule set, as measured, is small.</p>
+<h2>Methodology reminder</h2>
+<p>The composite is the weighted sum named above: Seasonality 25%, Cycle Fit 40%, Relative Strength 35%. Lookahead bias in the backtest is controlled using FRED ALFRED point-in-time vintages, so each date sees only data available then. The backtest result since May 2011 is a property of this specific rule set, not a forecast of future returns.</p>
+    </div>
+
+    <hr>
+
+    <p class="attribution">
+      By <a href="https://brianbeals.com">Brian Beals</a>. Methodology and code: <a href="https://github.com/brianbeals/sector-rotation-screener">github.com/brianbeals/sector-rotation-screener</a>. Commentary generated by Anthropic's Claude (claude-opus-4-8).
+    </p>
+
+  </main>
+  <footer class="site">
+    <svg viewBox="0 0 32 32" width="16" height="16" style="vertical-align:middle;margin-right:6px" aria-label="Brian Beals"><rect width="32" height="32" rx="6" fill="#1E3A5F"/><text x="16" y="15" text-anchor="middle" dominant-baseline="central" fill="#fff" font-family="-apple-system,system-ui,sans-serif" font-size="16" font-weight="800" letter-spacing="-0.04em">BB</text></svg>© 2026 Brian Beals · <a href="https://brianbeals.com">brianbeals.com</a> · <a href="https://github.com/brianbeals/sector-rotation-screener">github</a>
+  </footer>
+</body>
+</html>

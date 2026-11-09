@@ -1,0 +1,44 @@
+{
+  "data_source": "deterministic demo data (seed=7)",
+  "is_demo": true,
+  "symbols": [
+    "EQUITY",
+    "GROWTH",
+    "BOND",
+    "GOLD"
+  ],
+  "config": {
+    "momentum_lookback": 60,
+    "trend_lookback": 120,
+    "volatility_lookback": 20,
+    "factor_weights": {
+      "momentum": 0.5,
+      "trend": 0.3,
+      "low_volatility": 0.2
+    },
+    "rebalance_frequency": 20,
+    "top_k": 1,
+    "commission_bps": 10.0,
+    "annualization": 252,
+    "risk_free_rate": 0.02,
+    "minimum_momentum": 0.0,
+    "require_uptrend": true,
+    "max_stale_days": 3,
+    "min_overlap_ratio": 0.8
+  },
+  "start_date": "2020-01-02",
+  "end_date": "2024-10-16",
+  "observations": 1250,
+  "total_return": 1.0646627794245478,
+  "cagr": 0.16345899885631043,
+  "annualized_volatility": 0.17340731491468803,
+  "sharpe": 0.814407107971621,
+  "max_drawdown": -0.20275185196742784,
+  "active_win_rate": 0.5243088655862727,
+  "benchmark_total_return": -0.16887145298163586,
+  "total_traded_notional": 41.0,
+  "total_transaction_cost": 0.041,
+  "invested_days_ratio": 0.8392,
+  "rebalance_count": 57,
+  "execution_count": 24
+}
